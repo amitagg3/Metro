@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Invoices</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<style>
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Lato", sans-serif
+}
+
+.w3-bar, h1, button {
+	font-family: "Montserrat", sans-serif
+}
+
+.fa-anchor, .fa-coffee {
+	font-size: 200px
+}
+</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript" src="Invoices.js"></script>
+</head>
+<body>
+	<div class="w3-top">
+		<div class="w3-bar w3-red w3-card w3-left-align w3-large">
+			<!-- <a
+				class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
+				href="javascript:void(0);" onclick="myFunction()"
+				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> -->
+			<a
+				href="file:///C:/Users/akash.dixit/eclipse-workspace/mcrmApp/src/main/resources/static/mcrmHome.html#"
+				class="w3-bar-item w3-button w3-padding-large w3-white">Home </a> <a
+				href="file:///C:/Users/akash.dixit/eclipse-workspace/mcrmApp/src/main/resources/static/Invoice.html#"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Invoices</a>
+			<a href="#"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Mescon</a>
+			<a href="#"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">CIP</a>
+			<a href="#"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Articles</a>
+		</div>
+
+		<!-- Navbar on small screens -->
+		<div id="navDemo"
+			class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Invoice</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Mescon</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">CIP</a> <a
+				href="#" class="w3-bar-item w3-button w3-padding-large">Articles</a>
+		</div>
+		</div >
+		<div ng-app="myApp" ng-controller="InvoiceController">
+			<div ng-init="showInvoiceList()" ">
+				<div>
+					<table class=" table table-bordered table table-hover"
+						style="margin-top:80px">
+						<thead class="thead-dark">
+							<tr>
+								<th>Invoice#</th>
+								<th>Error</th>
+								<th>Status</th>
+								<th>Timestamp</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="invoice in invoiceList">
+								<td>{{invoice.invc_num}}</td>
+								<td>{{invoice.error_desc}}</td>
+								<td>{{invoice.status}}</td>
+								<td>{{invoice.created}}</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+</body>
+</html>

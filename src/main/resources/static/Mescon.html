@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Mescon</title>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<style>
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Lato", sans-serif
+}
+
+.w3-bar, h1, button {
+	font-family: "Montserrat", sans-serif
+}
+
+.fa-anchor, .fa-coffee {
+	font-size: 200px
+}
+</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script type="text/javascript" src="mescon.js"></script>
+	</head>
+<body>
+	<div class="w3-top">
+		<div class="w3-bar w3-red w3-card w3-left-align w3-large">
+			<!-- <a
+				class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
+				href="javascript:void(0);" onclick="myFunction()"
+				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> -->
+			<a
+				href="file:///C:/Users/amit.aggarwal/workspace/mcrmApp/src/main/resources/static/mcrmHome.html#"
+				class="w3-bar-item w3-button w3-padding-large w3-white">Home </a> <a
+				href="file:///C:/Users/amit.aggarwal/workspace/mcrmApp/src/main/resources/static/Invoice.html#"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Invoices</a>
+			<a href="#"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Mescon</a>
+			<a href="#"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">CIP</a>
+			<a href="#"
+				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Articles</a>
+		</div>
+
+		<!-- Navbar on small screens -->
+		<div id="navDemo"
+			class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Invoice</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">Mescon</a>
+			<a href="#" class="w3-bar-item w3-button w3-padding-large">CIP</a> <a
+				href="#" class="w3-bar-item w3-button w3-padding-large">Articles</a>
+		</div>
+		</div >
+		<div ng-app="myApp" ng-controller="MesconCustomerController"
+			 style="margin: 80px;">
+			<div class="card col-sm-5" >
+				<br>
+				<h4>Customer List:</h4>
+				<div class="card-body ">
+					<div>
+						<form class="form-inline" ng-submit="showMesconCustList()" >
+							<div class="form-group">
+
+								<label for="country" class=" mb-2 mr-sm-5">Country: </label> 
+								<select
+								 ng-model="Country"
+									ng-options="country for country in allCountries"
+									class="form-control mb-2 mr-sm-5" id="sel2"></select>
+									<label for="No. of Days" class=" mb-2 mr-sm-2"># of Days: </label> 
+									<input type="text" ng-model="no_of_days" class="form-control mb-2 mr-sm-5" style="width: 68px; "></input>
+									<button type="submit" class="btn btn-primary mb-2 mr-sm-3">Query</button>
+									</div>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+			<div>
+					<table class=" table table-bordered table table-hover"
+						style="margin-top:80px">
+						<thead class="thead-dark">
+							<tr>
+								<th>InsertTimeStamp</th>
+								<th>Store Num</th>
+								<th>Country</th>
+								<th>Processing Cd</th>
+								<th>Operation</th>
+								<th>Payload</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="cust in mesconList">
+								<td>{{cust.insert_time_stamp}}</td>
+								<td>{{cust.store_Num}}</td>
+								<td>{{cust.country}}</td>
+								<td>{{cust.processing_cd}}</td>
+								<td>{{cust.operation}}</td>
+								<td>{{cust.payload}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+		</div>
+
+		
+</body>
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+</html>
