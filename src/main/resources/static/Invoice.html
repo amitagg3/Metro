@@ -14,9 +14,11 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
+
 <style>
 body, h1, h2, h3, h4, h5, h6 {
-	font-family: "Lato", sans-serif
+	font-family: "Lato", sans-serif;
+	padding-top: 10px;
 }
 
 .w3-bar, h1, button {
@@ -28,7 +30,6 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 table, tr td {
-	margin-top: 80px;
 	width: 100%;
 }
 
@@ -54,14 +55,21 @@ td {
 }
 
 ng-invalid {
-  border-color: #e9322d;
+	border-color: #e9322d;
 }
 
+.loading {
+	padding-top: 100px;;
+	padding-left: 500px;;
+}
 </style>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.7.8/angular-sanitize.min.js"></script>
 <script type="text/javascript" src="invoices.js"></script>
 </head>
 <body>
@@ -96,55 +104,93 @@ ng-invalid {
 	</div>
 	<div ng-app="myApp" ng-controller="InvoicesController"
 		style="margin: 80px;">
-		<div class="card col-sm-12">
-			<br>
-			<h4>Search Invoices:</h4>
-			<div class="card-body ">
+		<div class="card col-sm-7">
+			<h4>
+				Search Invoices:
+				<button id="clear" ng-click="clear()"
+					style="float: right; background-color: Transparent; border: none;">
+					<img align="right" class="refresh" src="refresh.png"
+						style="height: 25px; width: 25px;"></img>
+				</button>
+			</h4>
+			<div class="card-body  ">
 				<div>
-					<form name="myForm" class="form-inline" ng-submit="showInvoiceList()" novalidate>
-						<div class="form-group">
-							<label class=" mb-2 mr-sm-5" for="Enterprise">*Enterprise:
-							</label> <select name="enterprise" ng-model="enterprise" ng-required="true" 
-								ng-options="enterprise for enterprise in enterprises" 
-								class="form-control mb-2 mr-sm-5" id="sel1"  ></select>
-							 <label for="country" class=" mb-2 mr-sm-5">Country: </label> <select
-								ng-if="enterprise==undefined" name="country" ng-model="Country"
+					<form name="myForm" ng-submit="loader()" novalidate>
+						<div class="form-row form-inline form-group">
+							<label class=" mb-3 mr-sm-3" for="Enterprise">*Enterprise:
+							</label> <select name="enterprise" ng-model="enterprise"
+								ng-required="true"
+								ng-options="enterprise for enterprise in enterprises"
+								class="form-control mb-3 mr-sm-3" id="sel1"></select> <label
+								for="country" class=" mb-3 mr-sm-3">Country: </label> <select
+								ng-if="enterprise==''" name="country" ng-model="Country"
 								ng-options="country for country in e0Countries"
-								class="form-control mb-2 mr-sm-5" id="sel2"></select> <select
-								ng-if="enterprise=='E0'" name="country" ng-model="childScope.Country" ng-required="store_num.length >0"
+								class="form-control mb-3 mr-sm-3" id="sel2"></select> <select
+								ng-if="enterprise=='E0'" name="country"
+								ng-model="childScope.Country" ng-required="store_num.length >0"
 								ng-options="country for country in e0Countries"
-								class="form-control mb-2 mr-sm-5" id="sel2"></select> <select
-								ng-if="enterprise=='E1'" name="country" ng-model="childScope.Country" ng-required="store_num.length >0"
+								class="form-control mb-3 mr-sm-3" id="sel2"></select> <select
+								ng-if="enterprise=='E1'" name="country"
+								ng-model="childScope.Country" ng-required="store_num.length >0"
 								ng-options="country for country in e1Countries"
-								class="form-control mb-2 mr-sm-5" id="sel2"></select> <select
-								ng-if="enterprise=='E2'" name="country" ng-model="childScope.Country" ng-required="store_num.length >0"
+								class="form-control mb-3 mr-sm-3" id="sel2"></select> <select
+								ng-if="enterprise=='E2'" name="country"
+								ng-model="childScope.Country" ng-required="store_num.length >0"
 								ng-options="country for country in e2Countries"
-								class="form-control mb-2 mr-sm-3" id="sel2"></select> <select
-								ng-if="enterprise=='E3'" name="country" ng-model="childScope.Country" ng-required="store_num.length >0"
+								class="form-control mb-3 mr-sm-3" id="sel2"></select> <select
+								ng-if="enterprise=='E3'" name="country"
+								ng-model="childScope.Country" ng-required="store_num.length >0"
 								ng-options="country for country in e3Countries"
-								class="form-control mb-2 mr-sm-5" id="sel2"></select> <label
-								for="No. of Days" class=" mb-2 mr-sm-2"># of Days: </label> <input
+								class="form-control mb-3 mr-sm-3" id="sel2"></select> <label
+								for="No. of Days" class=" mb-3 mr-sm-3"># of Days: </label> <input
 								type="text" ng-model="no_of_days"
-								class="form-control mb-2 mr-sm-3" style="width: 68px;"></input>
-							<label for="No. of Days" class=" mb-2 mr-sm-3">Store# 
-							</label> <input type="text" name="store_num" ng-model="store_num"
-								class="form-control mb-2 mr-sm-2" style="width: 68px;"></input>
-							<label for="invc_num" class=" mb-2 mr-sm-3">Invc Num: </label> <input
-								type="text" ng-model="invc_num"
-								class="form-control mb-2 mr-sm-5"></input>
-							<button type="submit" ng-disabled="!myForm.$valid" class="btn btn-primary mb-2 mr-sm-3">Query</button>
-							<button ng-click="clear()" class="btn btn-primary mb-2 mr-sm-3">Reset</button>
+								class="form-control mb-3 mr-sm-3" style="width: 68px;"></input>
+							<label for="No. of Days" class=" mb-3 mr-sm-3">Store# : </label>
+							<input type="text" name="store_num" ng-model="store_num"
+								class="form-control mb-3 mr-sm-3" style="width: 90px;"></input>
+						</div>
+						<div class="form-row form-inline">
+							<label for="invc_num" class=" mb-4 mr-sm-4">Invoice # : </label>
+							<input type="text" ng-model="invc_num"
+								class="form-control  mb-4 mr-sm-4" style="width: 227px;"></input> <label
+								for="order_num" class=" mb-4 mr-sm-4">Order # : </label> <input
+								type="text" ng-model="order_num"
+								class="form-control mb-4 mr-sm-4" style="width: 228px;"></input>
+						</div>
+						<div class="form-row form-inline">
+							<label class=" mb-5 mr-sm-5" for="status">Inv Status :
+								 </label><select name="status" ng-model="status" multiple
+								ng-options="status for status in invoiceStatus"
+								class="form-control mb-5 mr-sm-5 " id="status"
+								style="width: 200px;"></select>
+
+
+
+							<button id="query" type="submit" ng-disabled="!myForm.$valid"
+								class="mb-5 mr-sm-5 btn btn-success btn-lg" style="width: 230px; height: 50px; align:center; margin-left:40px;">Query</button>
 						</div>
 					</form>
-					<br>
-						<p ng-show ="myForm.enterprise.$touched && myForm.enterprise.$error.required" style="color:red;">Enterprise is required.</p>
-						<p ng-show ="myForm.country.$error.required" style="color:red;">Country is required with Store#</p>
-						
+
+
+					<!--  -->
+
+
+					<p
+						ng-show="myForm.enterprise.$touched && myForm.enterprise.$error.required"
+						style="color: red;">Enterprise is required.</p>
+					<p ng-show="myForm.country.$error.required" style="color: red;">Country
+						is required with Store#</p>
+
 				</div>
 			</div>
 		</div>
-		<div>
-			<table class="table   table table-hover  ">
+		<div style="margin-top: 20px;">
+			<div ng-show=" showRecords > 0 ">
+				<p style="color: red;">
+					<b>{{count}} Results found.</b>
+				</p>
+			</div>
+			<table class="table ">
 				<thead class="thead-dark ">
 					<tr>
 						<th>Invoice#</th>
@@ -162,6 +208,7 @@ ng-invalid {
 				</thead>
 
 				<tbody>
+
 					<tr ng-repeat="invoice in invoiceList">
 						<td>{{invoice.invc_num}}</td>
 						<td>{{invoice.order_num}}</td>
@@ -173,26 +220,32 @@ ng-invalid {
 						<td>{{invoice.store}}</td>
 						<td>{{invoice.customer_num}}</td>
 						<td>{{invoice.bu_id}}</td>
-
+					</tr>
+					<tr>
+						<td class="loading" colspan="10" ng-show="loading > 0"><img
+							class="loading" src="loading.gif"/ ></td>
 					</tr>
 				</tbody>
 
 			</table>
+
 		</div>
+		<div>
+<button type="button" ng-csv="getArray" filename="test.csv">Export</button>
+</div>
 	</div>
 
 
 </body>
 <script type="text/javascript">
-// Used to toggle the menu on small screens when clicking on the menu button
-function myFunction() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-
+	// Used to toggle the menu on small screens when clicking on the menu button
+	function myFunction() {
+		var x = document.getElementById("navDemo");
+		if (x.className.indexOf("w3-show") == -1) {
+			x.className += " w3-show";
+		} else {
+			x.className = x.className.replace(" w3-show", "");
+		}
+	}
 </script>
 </html>

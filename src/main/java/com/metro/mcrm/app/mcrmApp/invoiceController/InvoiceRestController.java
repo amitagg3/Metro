@@ -22,24 +22,11 @@ public class InvoiceRestController {
 
 	@GetMapping("/allInvoices")
 	@ResponseBody
-	public List<Invoice> getAllInvoices(@RequestParam String enterprise, @RequestParam Optional<String> country,@RequestParam Optional<String> noOfDays,@RequestParam Optional<String>store_num,@RequestParam Optional<String>invc_num) {
+	public List<Invoice> getAllInvoices(@RequestParam String enterprise, @RequestParam Optional<String> country,@RequestParam Optional<String> noOfDays,@RequestParam Optional<String>store_num,@RequestParam Optional<String>invc_num,@RequestParam Optional<String>order_num,@RequestParam Optional<String[]> status) {
 
-		return dao.findAll(enterprise,country,noOfDays,store_num,invc_num);
+		return dao.findAll(enterprise,country,noOfDays,store_num,invc_num,order_num,status);
 
 	}
 	
-	@GetMapping("/invoicesByCountry")
-	public List<Invoice> getInvoicesBycountry(@RequestParam String enterprise,@RequestParam String country ) {
-		
-		return dao.findByCountry(enterprise,country);
 	
-	}
-	
-	@GetMapping("/invoicesByInvcNum")
-	public List<Invoice> getInvoicesByInvcNum(@RequestParam String invcNum,@RequestParam String enterprise,@RequestParam String country ) {
-		
-		return dao.findByInvcNum(invcNum,enterprise,country);
-	
-	}
-
 }
