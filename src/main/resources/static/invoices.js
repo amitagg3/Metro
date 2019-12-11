@@ -1,5 +1,4 @@
-
-        var myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp', ['ngSanitize','ngCsv']);
 		myApp.controller('InvoicesController', ['$scope', '$http', function($scope, $http) {
 		$scope.enterprises = ['E0','E1','E2','E3'];
 		$scope.e0Countries = ['PT','SK','PL','IT','TR','HR','CZ','BG','NL','BE'];	
@@ -14,15 +13,11 @@
 		$scope.invc_num="";
 		$scope.store_num="";
 		$scope.order_num="";
-	 	$scope.invoiceList ="";
+	 	$scope.invoiceList =[];
+	 	$scope.infileList =[];
 	 	$scope.status="";
 	 	$scope.resMsg = null;
-	 	/*var c;
-	 	for( c of $scope.status){
-	 		console.log(c);
-	 	}*/
-	 	console.log($scope.status);
-	 	console.log($scope.enterprise);
+	 	$scope.data = {};
     	var showInvoiceList =function(){$http({
             method: 'GET',
             url: 'http://localhost:8080/invoices/allInvoices?enterprise='+$scope.enterprise+'&country='
@@ -31,12 +26,19 @@
          }).then(function (response){
         	 var obj=JSON.parse(JSON.stringify(response));
         	 $scope.invoiceList =obj.data;
-        	 $scope.getArray =obj.data;
-        	 console.log($scope.status);
-        	 $scope.count=$scope.invoiceList.length;
+        	 $scope.infileList =[];
+        	 for(invoice of $scope.invoiceList){
+        		var obj={};
+        		obj.name ="run task for component WfProcBatchMgr with SearchSpec = \"([Id] = '"+invoice.row_id  + "' AND [Account Organization Id] = '" +invoice.bu_id+"')\"";
+        		obj.processname="ProcessName=\"DC_MG Billing Process - Send Invoice\"";
+        		$scope.infileList.push(obj);
+     		}
+        	 console.log(obj.name);
+      		console.log($scope.infileList);
+      		$scope.count=$scope.invoiceList.length;
         	 $scope.loading = 0;
         	 $scope.showRecords =5;
-         },function (error){
+         	},function (error){
         	 $scope.resMsg = "No Data";
         	 $scope.loading = 0;
         	 $scope.showRecords =5;
@@ -49,17 +51,18 @@
     		$scope.invc_num="";
     		$scope.store_num="";
     		$scope.order_num="";
-    		$scope.invoiceList ="";
+    		$scope.invoiceList =[];
+    		$scope.infileList =[];
     		$scope.status=[];
     		$scope.showRecords = 0;
-    		};
-    	$scope.loader=function(){
-    		$scope.loading = 5;
-    		console.log($scope.status)
-    		showInvoiceList();
-    		
-    		};
+    		}
+    	
+    		$scope.loader=function(){
+        		$scope.loading = 5;
+        		showInvoiceList();
+        		};
     	
     }]);
+		
 		
 	

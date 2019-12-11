@@ -32,13 +32,14 @@ public class InvoiceJdbcDao {
 			invoice.setInvc_num(rs.getString("invc_num"));
 			invoice.setOrder_num(rs.getString("order_num"));
 			invoice.setError_desc(rs.getString("X_ERROR_DESC"));
-			invoice.setCreated(rs.getDate("created"));
-			invoice.setOrder_created(rs.getDate("order_created"));
+			invoice.setCreated(rs.getString("created"));
+			invoice.setOrder_created(rs.getString("order_created"));
 			invoice.setStore(rs.getString("store_num"));
 			invoice.setCustomer_num(rs.getString("customer_num"));
 			invoice.setStatus(rs.getString("status"));
 			invoice.setOrder_status(rs.getString("order_status"));
 			invoice.setBu_id(rs.getString("bu_id"));
+			invoice.setRow_id(rs.getString("row_id"));
 			return invoice;
 		}
 
@@ -108,7 +109,7 @@ public class InvoiceJdbcDao {
 				orderNum += orderArr[orderArr.length - 1];
 			}
 		}
-		String sql = "select a.invc_num as invc_num, b.order_num as order_num, a.X_ERROR_DESC as X_ERROR_DESC, a.created as created ,b.created as order_created, cs.ou_num as store_num, cc.ou_num as customer_num ,a.status_cd as status,b.status_cd as order_status,b.bu_id as bu_id \n"
+		String sql = "select a.invc_num as invc_num, b.order_num as order_num, a.X_ERROR_DESC as X_ERROR_DESC,to_char(a.created, 'MM-DD-YYYY HH24:MI:SS') as created ,to_char(b.created, 'MM-DD-YYYY HH24:MI:SS') as order_created, cs.ou_num as store_num, cc.ou_num as customer_num ,a.status_cd as status,b.status_cd as order_status,b.bu_id as bu_id,a.row_id as row_id \n"
 				+ "from siebel.s_invoice a, siebel.s_order b, siebel.s_org_ext cc, Siebel.s_org_ext cs \n"
 				+ "where cs.row_id = b.x_store_id \n"
 				+ "and b.accnt_id = cc.row_id \n"
@@ -141,6 +142,5 @@ public class InvoiceJdbcDao {
 		return null;
 
 	}
-
-
+	
 }

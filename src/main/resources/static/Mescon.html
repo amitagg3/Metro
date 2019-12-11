@@ -35,32 +35,28 @@ body, h1, h2, h3, h4, h5, h6 {
 <body>
 	<div class="w3-top">
 		<div class="w3-bar w3-red w3-card w3-left-align w3-large">
-			<!-- <a
+			<a
 				class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
 				href="javascript:void(0);" onclick="myFunction()"
-				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> -->
-			<a
-				href="file:///C:/Users/amit.aggarwal/workspace/mcrmApp/src/main/resources/static/mcrmHome.html#"
-				class="w3-bar-item w3-button w3-padding-large w3-white">Home </a> <a
-				href="file:///C:/Users/amit.aggarwal/workspace/mcrmApp/src/main/resources/static/Invoice.html#"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Invoices</a>
-			<a href="#"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Mescon</a>
-			<a href="#"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">CIP</a>
-			<a href="#"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Articles</a>
+				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> 
+		 <a	href="mcrmHome.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home </a> 
+		 <a href="Invoice.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Invoices</a> 
+		 <a href="Mescon.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Mescon</a> 
+		 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">CIP</a> 
+		 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Articles</a>
+		 
 		</div>
 
 		<!-- Navbar on small screens -->
 		<div id="navDemo"
 			class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-			<a href="#" class="w3-bar-item w3-button w3-padding-large">Invoice</a>
-			<a href="#" class="w3-bar-item w3-button w3-padding-large">Mescon</a>
+			<a href="mcrmHome.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+			<a href="Invoice.html" class="w3-bar-item w3-button w3-padding-large">Invoice</a>
+			<a href="Mescon.html" class="w3-bar-item w3-button w3-padding-large">Mescon</a>
 			<a href="#" class="w3-bar-item w3-button w3-padding-large">CIP</a> <a
 				href="#" class="w3-bar-item w3-button w3-padding-large">Articles</a>
 		</div>
-		</div >
+	</div>
 		<div ng-app="myApp" ng-controller="MesconCustomerController"
 			 style="margin: 80px;">
 			<div class="card col-sm-5" >
@@ -112,7 +108,7 @@ body, h1, h2, h3, h4, h5, h6 {
 				</div>
 		</div>
 
-		
+	
 </body>
 <script>
 // Used to toggle the menu on small screens when clicking on the menu button
@@ -125,4 +121,5 @@ function myFunction() {
   }
 }
 </script>
+
 </html>

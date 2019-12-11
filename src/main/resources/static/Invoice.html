@@ -68,43 +68,41 @@ ng-invalid {
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.7.8/angular-sanitize.min.js"></script>
-<script type="text/javascript" src="invoices.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-sanitize.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.3/ng-csv.min.js"></script>
+ -->
+ <script type="text/javascript" src="invoices.js"></script>
+  <script type="text/javascript" src="ng-csv.js"></script>
 </head>
 <body>
 	<div class="w3-top">
 		<div class="w3-bar w3-red w3-card w3-left-align w3-large">
-			<!-- <a
+			<a
 				class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
 				href="javascript:void(0);" onclick="myFunction()"
-				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> -->
-			<a
-				href="file:///C:/Users/amit.aggarwal/workspace/mcrmApp/src/main/resources/static/mcrmHome.html#"
-				class="w3-bar-item w3-button w3-padding-large w3-white">Home </a> <a
-				href="file:///C:/Users/amit.aggarwal/workspace/mcrmApp/src/main/resources/static/Invoice.html#"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Invoices</a>
-			<a
-				href="file:///C:/Users/amit.aggarwal/workspace/mcrmApp/src/main/resources/static/Mescon.html#"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Mescon</a>
-			<a href="#"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">CIP</a>
-			<a href="#"
-				class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Articles</a>
+				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> 
+		 <a	href="mcrmHome.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home </a> 
+		 <a href="Invoice.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Invoices</a> 
+		 <a href="Mescon.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Mescon</a> 
+		 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">CIP</a> 
+		 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Articles</a>
+		 
 		</div>
 
 		<!-- Navbar on small screens -->
 		<div id="navDemo"
 			class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
-			<a href="#" class="w3-bar-item w3-button w3-padding-large">Invoice</a>
-			<a href="#" class="w3-bar-item w3-button w3-padding-large">Mescon</a>
+			<a href="mcrmHome.html" class="w3-bar-item w3-button w3-padding-large">Home</a>
+			<a href="Invoice.html" class="w3-bar-item w3-button w3-padding-large">Invoice</a>
+			<a href="Mescon.html" class="w3-bar-item w3-button w3-padding-large">Mescon</a>
 			<a href="#" class="w3-bar-item w3-button w3-padding-large">CIP</a> <a
 				href="#" class="w3-bar-item w3-button w3-padding-large">Articles</a>
 		</div>
 	</div>
 	<div ng-app="myApp" ng-controller="InvoicesController"
 		style="margin: 80px;">
-		<div class="card col-sm-7">
+		<div class="row">
+		<div class="card col-sm-7 " style="padding:20px;">
 			<h4>
 				Search Invoices:
 				<button id="clear" ng-click="clear()"
@@ -167,7 +165,7 @@ ng-invalid {
 
 
 							<button id="query" type="submit" ng-disabled="!myForm.$valid"
-								class="mb-5 mr-sm-5 btn btn-success btn-lg" style="width: 230px; height: 50px; align:center; margin-left:40px;">Query</button>
+								class="mb-5 mr-sm-5 btn btn-primary btn-lg" style="width: 230px; height: 50px; align:center; margin-left:40px;">Query</button>
 						</div>
 					</form>
 
@@ -183,13 +181,33 @@ ng-invalid {
 
 				</div>
 			</div>
-		</div>
-		<div style="margin-top: 20px;">
+			</div>
+			<div class="card col-sm-4" style="margin-left: 80px;">
+				<div class="card-body ">
+
+
+					<button type="button" ng-disabled=" ! invoiceList.length > 0 "
+						class="mb-5 mr-sm-5 btn btn-success btn-lg" ng-csv="invoiceList"
+						filename="InvoiceExport.csv"
+						csv-header="['Invoice#','Order_num','Customer#','Store','Error_Desc','InvStatus','OrdStatus','InvCreated','OrdCreated','bu_id']"
+						charset="utf-8"
+						style="width: 310px; height: 50px; align: center; margin-top: 80px; margin-left:30px;">
+						Download CSV
+					</button>
+					<button type="button" ng-disabled=" ! invoiceList.length > 0 "
+						class="mb-5 mr-sm-5 btn btn-success btn-lg" ng-csv="infileList" 
+						filename="Invoice_Infile.in"
+						style="width: 310px; height: 50px; align: center;  margin: 30px;">
+						Create Infile
+					</button>
+
+				</div>
+			</div>
+			<div style="margin-top: 20px;">
 			<div ng-show=" showRecords > 0 ">
 				<p style="color: red;">
 					<b>{{count}} Results found.</b>
 				</p>
-			</div>
 			<table class="table ">
 				<thead class="thead-dark ">
 					<tr>
@@ -228,13 +246,13 @@ ng-invalid {
 				</tbody>
 
 			</table>
+			</div>
 
 		</div>
 		<div>
-<button type="button" ng-csv="getArray" filename="test.csv">Export</button>
 </div>
 	</div>
-
+	</div>
 
 </body>
 <script type="text/javascript">
@@ -247,5 +265,6 @@ ng-invalid {
 			x.className = x.className.replace(" w3-show", "");
 		}
 	}
-</script>
+</script> 
+
 </html>

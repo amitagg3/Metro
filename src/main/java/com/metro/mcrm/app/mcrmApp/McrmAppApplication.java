@@ -42,12 +42,11 @@ public class McrmAppApplication implements CommandLineRunner {
 		        };
 		    }
 		public void run(String... args) throws Exception {
-			System.out.println("Amit");
 			//logger.info("All users -> {}", .getAllInvoices("E1", "undefined", "10", "undefined"));
 			//logger.info("All users -> {}", invoiceRestController.getAllInvoices("E2", null, null, null));
-			logger.info("All users -> {}", mesconCustRestController.getAllMescCust());
-
 			
+
+			logger.info("Hello There");
 //			logger.info("User id 10001 -> {}", dao.findById(10001));
 //			
 //			logger.info("Deleting 10002 -> No of Rows Deleted - {}", 
