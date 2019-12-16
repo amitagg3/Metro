@@ -17,10 +17,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <!-- Navbar -->
 <div class="w3-top">
 		<div class="w3-bar w3-red w3-card w3-left-align w3-large">
-			<a
-				class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
-				href="javascript:void(0);" onclick="myFunction()"
-				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> 
 		 <a	href="mcrmHome.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home </a> 
 		 <a href="Invoice.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Invoices</a> 
 		 <a href="Mescon.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Mescon</a> 
@@ -39,12 +35,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 				href="#" class="w3-bar-item w3-button w3-padding-large">Articles</a>
 		</div>
 	</div>
-
-
-<header class="w3-container w3-red w3-center" style="padding:128px 16px">
-  <h1 class="w3-margin w3-jumbo">MCRM WEB APP</h1>
-</header>
-
 <!-- First Grid -->
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
@@ -85,15 +75,19 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
 </body>
 <script type="text/javascript">
-	// Used to toggle the menu on small screens when clicking on the menu button
-	function myFunction() {
-		var x = document.getElementById("navDemo");
-		if (x.className.indexOf("w3-show") == -1) {
-			x.className += " w3-show";
-		} else {
-			x.className = x.className.replace(" w3-show", "");
-		}
-	}
+jQuery(document).ready(function($) {
+	$(function () {
+	var url = window.location.pathname; 
+	var activePage = url.substring(url.lastIndexOf('/') + 1); 
+	    $('.irp-menu-item .irp-menu-link').each(function () { 
+	        var linkPage = this.href.substring(this.href.lastIndexOf('/') + 1); 
+
+	        if (activePage == linkPage) { 
+	            $(this).closest("li").addClass("active"); 
+	        }
+	    });
+	})
+	});
 </script> 
 
 </html>

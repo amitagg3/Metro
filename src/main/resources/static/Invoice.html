@@ -14,7 +14,6 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-
 <style>
 body, h1, h2, h3, h4, h5, h6 {
 	font-family: "Lato", sans-serif;
@@ -59,8 +58,8 @@ ng-invalid {
 }
 
 .loading {
-	padding-top: 100px;;
-	padding-left: 500px;;
+	padding-top: 0px;;
+	padding-left: 250px;;
 }
 </style>
 
@@ -77,12 +76,9 @@ ng-invalid {
 <body>
 	<div class="w3-top">
 		<div class="w3-bar w3-red w3-card w3-left-align w3-large">
-			<a
-				class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
-				href="javascript:void(0);" onclick="myFunction()"
-				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> 
-		 <a	href="mcrmHome.html" class="w3-bar-item w3-button w3-padding-large w3-white">Home </a> 
-		 <a href="Invoice.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Invoices</a> 
+			
+		 <a	href="mcrmHome.html" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Home </a> 
+		 <a href="Invoice.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-white" onclick="myFunction()">Invoices</a> 
 		 <a href="Mescon.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Mescon</a> 
 		 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">CIP</a> 
 		 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Articles</a>
@@ -99,6 +95,7 @@ ng-invalid {
 				href="#" class="w3-bar-item w3-button w3-padding-large">Articles</a>
 		</div>
 	</div>
+	
 	<div ng-app="myApp" ng-controller="InvoicesController"
 		style="margin: 80px;">
 		<div class="row">
@@ -142,18 +139,18 @@ ng-invalid {
 								class="form-control mb-3 mr-sm-3" id="sel2"></select> <label
 								for="No. of Days" class=" mb-3 mr-sm-3"># of Days: </label> <input
 								type="text" ng-model="no_of_days"
-								class="form-control mb-3 mr-sm-3" style="width: 68px;"></input>
+								class="form-control mb-3 mr-sm-3" style="width: 50px;"></input>
 							<label for="No. of Days" class=" mb-3 mr-sm-3">Store# : </label>
 							<input type="text" name="store_num" ng-model="store_num"
-								class="form-control mb-3 mr-sm-3" style="width: 90px;"></input>
+								class="form-control mb-3 mr-sm-3" style="width: 70px;"></input>
 						</div>
 						<div class="form-row form-inline">
 							<label for="invc_num" class=" mb-4 mr-sm-4">Invoice # : </label>
 							<input type="text" ng-model="invc_num"
-								class="form-control  mb-4 mr-sm-4" style="width: 227px;"></input> <label
+								class="form-control  mb-4 mr-sm-4" style="width: 215px;"></input> <label
 								for="order_num" class=" mb-4 mr-sm-4">Order # : </label> <input
 								type="text" ng-model="order_num"
-								class="form-control mb-4 mr-sm-4" style="width: 228px;"></input>
+								class="form-control mb-4 mr-sm-4" style="width: 205px;"></input>
 						</div>
 						<div class="form-row form-inline">
 							<label class=" mb-5 mr-sm-5" for="status">Inv Status :
@@ -165,7 +162,7 @@ ng-invalid {
 
 
 							<button id="query" type="submit" ng-disabled="!myForm.$valid"
-								class="mb-5 mr-sm-5 btn btn-primary btn-lg" style="width: 230px; height: 50px; align:center; margin-left:40px;">Query</button>
+								class="mb-5 mr-sm-5 btn btn-primary btn-lg" style=" width:190px; align:center; margin-left:40px;">Query</button>
 						</div>
 					</form>
 
@@ -203,11 +200,16 @@ ng-invalid {
 
 				</div>
 			</div>
+			
+						<p class="loading" colspan="10" ng-show="loading > 0"><img
+							class="loading" src="loading.gif"/ ><p>
+					
 			<div style="margin-top: 20px;">
-			<div ng-show=" showRecords > 0 ">
+			<div ng-show=" showRecords > 0 && loading==0 ">
 				<p style="color: red;">
 					<b>{{count}} Results found.</b>
 				</p>
+				
 			<table class="table ">
 				<thead class="thead-dark ">
 					<tr>
@@ -224,7 +226,6 @@ ng-invalid {
 
 					</tr>
 				</thead>
-
 				<tbody>
 
 					<tr ng-repeat="invoice in invoiceList">
@@ -239,19 +240,15 @@ ng-invalid {
 						<td>{{invoice.customer_num}}</td>
 						<td>{{invoice.bu_id}}</td>
 					</tr>
-					<tr>
-						<td class="loading" colspan="10" ng-show="loading > 0"><img
-							class="loading" src="loading.gif"/ ></td>
-					</tr>
+					
 				</tbody>
 
 			</table>
 			</div>
-
+</div>
 		</div>
 		<div>
 </div>
-	</div>
 	</div>
 
 </body>

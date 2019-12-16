@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -16,7 +18,7 @@ import com.metro.mcrm.app.mcrmApp.invoiceController.MesconCustRestController;
 
 @SuppressWarnings("deprecation")
 @SpringBootApplication()
-public class McrmAppApplication implements CommandLineRunner {
+public class McrmAppApplication  extends SpringBootServletInitializer implements CommandLineRunner {
 
 
 
@@ -31,7 +33,13 @@ public class McrmAppApplication implements CommandLineRunner {
 		public static void main(String[] args) {
 			SpringApplication.run(McrmAppApplication.class, args);
 		}
-
+		
+		@Override
+		protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
+			return builder.sources(McrmAppApplication.class);
+		}
+		
+		
 		 @Bean
 		    public WebMvcConfigurer corsConfigurer() {
 		        return new WebMvcConfigurerAdapter() {
@@ -59,5 +67,8 @@ public class McrmAppApplication implements CommandLineRunner {
 //					dao.update(new Person(10003, "Pieter", "Utrecht", new Date())));
 			
 		}
+		
 	}
+
+
 

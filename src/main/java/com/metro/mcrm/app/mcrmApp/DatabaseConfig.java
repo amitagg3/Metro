@@ -18,6 +18,8 @@ public class DatabaseConfig {
     @Autowired
     @ConfigurationProperties(prefix="spring.datasource")
     public javax.sql.DataSource dataSourcepp12() {
+    	
+
         return  DataSourceBuilder.create().build();
     }
 

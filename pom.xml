@@ -11,8 +11,9 @@
 	<groupId>com.metro.mcrm.app</groupId>
 	<artifactId>mcrmApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>mcrmApp</name>
-	<description>Demo project for Spring Boot</description>
+	<description>MCRM Utility App </description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -29,12 +30,18 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc</artifactId>
-			<version>8</version>
-			<scope>system</scope>
-			<systemPath>T:/Kunde/04_CRM/Akash/mcrmApp/ojdbc8.jar</systemPath>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.oracle.jdbc/ojdbc8 -->
+		<dependency>
+			<groupId>com.oracle.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>12.2.0.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
@@ -59,6 +66,16 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>http://localhost:8080</url>
+					<server>TomcatServer</server>
+					<path>/mcrmApp</path>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
