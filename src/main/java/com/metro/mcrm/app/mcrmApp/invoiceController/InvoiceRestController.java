@@ -28,5 +28,16 @@ public class InvoiceRestController {
 
 	}
 	
+	@GetMapping("/generatecsv")
+	public void generatecsv(){
+		 dao.generatecsv();
+
+	}
+	@GetMapping("/generateInfile")
+	public void generateInfile(){
+		 dao.generate_infile();
+
+	}
+	
 	
 }

@@ -3,6 +3,7 @@
 <title>Invoices</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Lato">
@@ -32,6 +33,8 @@ table, tr td {
 	width: 100%;
 }
 
+
+
 tbody {
 	display: block;
 	height: 400px;
@@ -60,6 +63,10 @@ ng-invalid {
 .loading {
 	padding-top: 0px;;
 	padding-left: 250px;;
+}
+label{
+font-weight: normal;
+font-family:Sans-serif;
 }
 </style>
 
@@ -134,13 +141,13 @@ ng-invalid {
 								ng-options="country for country in e2Countries"
 								class="form-control mb-3 mr-sm-3" id="sel2"></select> <select
 								ng-if="enterprise=='E3'" name="country"
-								ng-model="childScope.Country" ng-required="store_num.length >0"
+								ng-model="childScope.Country" ng-required="store_num.length >0  "
 								ng-options="country for country in e3Countries"
 								class="form-control mb-3 mr-sm-3" id="sel2"></select> <label
 								for="No. of Days" class=" mb-3 mr-sm-3"># of Days: </label> <input
 								type="text" ng-model="no_of_days"
 								class="form-control mb-3 mr-sm-3" style="width: 50px;"></input>
-							<label for="No. of Days" class=" mb-3 mr-sm-3">Store# : </label>
+							<label for="store_num" class=" mb-3 mr-sm-3">Store# : </label>
 							<input type="text" name="store_num" ng-model="store_num"
 								class="form-control mb-3 mr-sm-3" style="width: 70px;"></input>
 						</div>
@@ -154,7 +161,7 @@ ng-invalid {
 						</div>
 						<div class="form-row form-inline">
 							<label class=" mb-5 mr-sm-5" for="status">Inv Status :
-								 </label><select name="status" ng-model="status" multiple
+								 </label><select name="status"  ng-model="status" multiple
 								ng-options="status for status in invoiceStatus"
 								class="form-control mb-5 mr-sm-5 " id="status"
 								style="width: 200px;"></select>
@@ -179,24 +186,23 @@ ng-invalid {
 				</div>
 			</div>
 			</div>
-			<div class="card col-sm-4" style="margin-left: 80px;">
+			<div class="card col-sm-4" style="margin-left: 5%;">
 				<div class="card-body ">
+				<h4>
+				For all Enterprises/ Countries :</h4>
+				<button title="Download csv for all unprocessed invoices on each enterprises" ng-click="generatecsv()" 
+						class="mb-5 mr-sm-5 btn btn-success btn-lg" 
+						style="width: 90%; height: 18%; align: center;  margin: 10%;">
+						<span class="glyphicon glyphicon-save"></span> Download CSV 
+					</button>
+					<button title="Creates a country wise .in file for All countries" ng-click="generateInfile()" 
+						class="mb-5 mr-sm-5 btn btn-success btn-lg" 
+						style="width: 90%; height: 18%; align: center;  margin: 10%;">
+						<span class="glyphicon glyphicon-save-file"></span> Create Infile 
+					</button> 
 
 
-					<button type="button" ng-disabled=" ! invoiceList.length > 0 "
-						class="mb-5 mr-sm-5 btn btn-success btn-lg" ng-csv="invoiceList"
-						filename="InvoiceExport.csv"
-						csv-header="['Invoice#','Order_num','Customer#','Store','Error_Desc','InvStatus','OrdStatus','InvCreated','OrdCreated','bu_id']"
-						charset="utf-8"
-						style="width: 310px; height: 50px; align: center; margin-top: 80px; margin-left:30px;">
-						Download CSV
-					</button>
-					<button type="button" ng-disabled=" ! invoiceList.length > 0 "
-						class="mb-5 mr-sm-5 btn btn-success btn-lg" ng-csv="infileList" 
-						filename="Invoice_Infile.in"
-						style="width: 310px; height: 50px; align: center;  margin: 30px;">
-						Create Infile
-					</button>
+					
 
 				</div>
 			</div>
@@ -209,26 +215,39 @@ ng-invalid {
 				<p style="color: red;">
 					<b>{{count}} Results found.</b>
 				</p>
-				
+				<button type="button" title="Download Csv" ng-disabled=" ! invoiceList.length > 0 "
+						class=" btn btn-primary " ng-csv="invoiceList"
+						filename="InvoiceExport.csv"
+						csv-header="['Invoice#','Order_num','Customer#','Store','Error_Desc','InvStatus','OrdStatus','InvCreated','OrdCreated','bu_id']"
+						charset="utf-8"
+						style=" margin-left:1190px;">
+						<span class="glyphicon glyphicon-save"></span> 
+					</button>
+					<button type="button" title="Create infile " ng-disabled=" ! infileList.length > 0 "
+						class=" btn btn-primary" ng-csv="infileList" 
+						filename="Invoice_Infile.in"
+						>
+						 <span class="glyphicon glyphicon-save-file"> </span>
+					</button> 
 			<table class="table ">
 				<thead class="thead-dark ">
 					<tr>
-						<th>Invoice#</th>
-						<th>Order#</th>
-						<th>Error Desc</th>
-						<th>InvCreated</th>
-						<th>OrdCreated</th>
-						<th>InvStatus</th>
-						<th>OrdStatus</th>
-						<th>Store#</th>
-						<th>Customer#</th>
-						<th>bu_id</th>
+						<th ng-click="orderByMe('invc_num')">Invoice#</th>
+						<th ng-click="orderByMe('order_num')">Order#</th>
+						<th ng-click="orderByMe('error_desc')">Error Desc</th>
+						<th ng-click="orderByMe('created')">InvCreated</th>
+						<th ng-click="orderByMe('order_created')">OrdCreated</th>
+						<th ng-click="orderByMe('status')">InvStatus</th>
+						<th ng-click="orderByMe('order_status')">OrdStatus</th>
+						<th ng-click="orderByMe('store')">Store#</th>
+						<th ng-click="orderByMe('customer_num')">Customer#</th>
+						<th ng-click="orderByMe('bu_id')">bu_id</th>
 
 					</tr>
 				</thead>
 				<tbody>
 
-					<tr ng-repeat="invoice in invoiceList">
+					<tr ng-repeat="invoice in invoiceList | orderBy:myOrderBy">
 						<td>{{invoice.invc_num}}</td>
 						<td>{{invoice.order_num}}</td>
 						<td>{{invoice.error_desc}}</td>

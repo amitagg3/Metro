@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Lato">
@@ -16,8 +17,10 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 <style>
+
 body, h1, h2, h3, h4, h5, h6 {
-	font-family: "Lato", sans-serif
+	font-family: "Lato", sans-serif;
+	padding-top: 10px;
 }
 
 .w3-bar, h1, button {
@@ -27,20 +30,37 @@ body, h1, h2, h3, h4, h5, h6 {
 .fa-anchor, .fa-coffee {
 	font-size: 200px
 }
+
+table, tr td {
+	width: 100%;
+}
+
+ng-invalid {
+	border-color: #e9322d;
+}
+
+.loading {
+	padding-top: 35px;;
+	padding-left:250px;;
+}
+label{
+font-weight: normal;
+font-family:Sans-serif;
+}
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-sanitize.min.js"></script>
 	<script type="text/javascript" src="mescon.js"></script>
 	</head>
 <body>
 	<div class="w3-top">
 		<div class="w3-bar w3-red w3-card w3-left-align w3-large">
-			<a
-				class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red"
-				href="javascript:void(0);" onclick="myFunction()"
-				title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a> 
+			
 		 <a	href="mcrmHome.html" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Home </a> 
-		 <a href="Invoice.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Invoices</a> 
+		 <a href="Invoice.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" onclick="myFunction()">Invoices</a> 
 		 <a href="Mescon.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-white">Mescon</a> 
 		 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">CIP</a> 
 		 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Articles</a>
@@ -58,57 +78,117 @@ body, h1, h2, h3, h4, h5, h6 {
 		</div>
 	</div>
 		<div ng-app="myApp" ng-controller="MesconCustomerController"
-			 style="margin: 80px;">
-			<div class="card col-sm-5" >
+			 style="margin: 70px;">
+			 <div class="row">
+			<div class="card col-sm-12" >
 				<br>
-				<h4>Customer List:</h4>
+				<h4 >Customer List: 
+				<button id="clear" ng-click="clear()"
+					style="float: right; background-color: Transparent; border: none;">
+					<img align="right" class="refresh" src="refresh.png"
+						style="height: 25px; width: 25px;"></img>
+				</button>	
+				
+				</h4>
 				<div class="card-body ">
 					<div>
-						<form class="form-inline" ng-submit="showMesconCustList()" >
-							<div class="form-group">
-
-								<label for="country" class=" mb-2 mr-sm-5">Country: </label> 
-								<select
-								 ng-model="Country"
-									ng-options="country for country in allCountries"
-									class="form-control mb-2 mr-sm-5" id="sel2"></select>
-									<label for="No. of Days" class=" mb-2 mr-sm-2"># of Days: </label> 
-									<input type="text" ng-model="no_of_days" class="form-control mb-2 mr-sm-5" style="width: 68px; "></input>
-									<button type="submit" class="btn btn-primary mb-2 mr-sm-3">Query</button>
+						<form name="myForm" ng-submit="loader()" novalidate>
+							<div class="form-row form-inline form-group">
+								<label for="entityType" class=" mb-3 mr-sm-3">*Entity Type: </label> 
+								 <select class="form-control mb-4 mr-sm-3" ng-model="EntityType" ng-change="clear_operation()"
+									ng-required="true" ng-options="entityType for entityType in allEntityType"
+									 id="sel2"></select>
+								<label for="country" class=" mb-3 mr-sm-3">Country: </label> 
+								 <select class="form-control mb-4 mr-sm-3" name="country" ng-model="country"
+									ng-options="country for country in allCountries" ng-required="store_num.length>0"
+									 id="sel2"></select> 
+									
+									<label for="ProcessingCd" class=" mb-3 mr-sm-3">Processing CD:</label> 
+									<select class="form-control mb-4 mr-sm-3" ng-model="ProcessingCd"
+									multiple ng-options="ProcessingCd for ProcessingCd in processingcd"></select>
+									<label for="store" class=" mb-3 mr-sm-3">Store : </label>
+							<input type="text" name="store_num" ng-model="store_num"
+								class="form-control mb-4 mr-sm-4" style="width: 110px;"></input>
+							<label for="operation" class=" mb-3 mr-sm-3">Operation : </label>
+							<input type="text" list="dataList" id="operation" name="operation" style="width: 220px;"
+    									ng-model="childScope.operation" class="form-control mb-4 mr-sm-3">
+     							      <datalist id="dataList">
+        						<option ng-if="EntityType=='Mescon_Article'" 
+								 ng-repeat="operation in allArticleOperations" name="operation" value="{{operation}}"></option>
+     								<option ng-if="EntityType=='Mescon_CI'" 
+								  ng-repeat="operation in allCiOperations" name="operation" value="{{operation}}"></option>
+									<option ng-if="EntityType=='Mescon_Customer'|| EntityType==''"
+								 ng-repeat="operation in allCustomerOperations" name="operation" value="{{operation}}" ></option>
+      								</datalist>
+								
+							</div>
+						<div class="form-row form-inline">	
+								<label
+								for="No. of Days" class=" mb-4 mr-sm-4"># of Days: </label> <input
+								type="text" ng-model="no_of_days"
+								class="form-control mb-4 mr-sm-4" style="width: 50px;"></input>						
+								<label for="payload" class=" mb-4 mr-sm-4">Payload : </label>
+							<input type="text" name="payload" ng-model="payload"
+								class="form-control mb-4 mr-sm-4" style="width: 280px;"></input>
+								<label for="key1" class=" mb-4 mr-sm-4">Key1 : </label>
+							<input type="text" name="key1" ng-model="key1"
+								class="form-control mb-4 mr-sm-4" style="width: 200px;"></input>
+								<label for="key4" class=" mb-4 mr-sm-4">Key4 : </label>
+							<input type="text" name="key4" ng-model="key4"
+								class="form-control mb-4 mr-sm-4" style="width: 200px;"></input>
+								
+     
+						<button id="query" type="submit" class="btn btn-primary mb-4 mr-sm-4" style="width: 100px;" ng-disabled="!myForm.$valid">Query</button>
 									</div>
 						</form>
+							<p ng-show="myForm.country.$error.required" style="color: red;">Country	is required with Store</p>
+						
 						
 					</div>
 				</div>
 			</div>
-			<div>
-					<table class=" table table-bordered table table-hover"
-						style="margin-top:80px">
+			<p class="loading" colspan="10" ng-show="loading > 0"><img style="width:500px;height:300px;" class="loading" src="loading.gif"/ ><p>
+			<div ng-show=" showRecords > 0 && loading==0">
+				<p style="color: red;">
+					<b>{{count}} Results found.</b>
+				</p>
+				
+					<table class=" table table-bordered table table-hover table-condensed"
+						style="margin-top:30px">
 						<thead class="thead-dark">
 							<tr>
-								<th>InsertTimeStamp</th>
-								<th>Store Num</th>
-								<th>Country</th>
-								<th>Processing Cd</th>
-								<th>Operation</th>
-								<th>Payload</th>
+								<th width="10%" ng-click="orderByMe('insert_time_stamp')">Insert Time</th>
+								<th width="8%" ng-click="orderByMe('store_Num')">Store Num</th>
+								<th width="5%">Country</th>
+								<th width="5%" ng-click="orderByMe('processing_cd')">Processing Cd</th>
+								<th width="8%" ng-click="orderByMe('operation')">Operation</th>
+								<th width="30%" width="30%">Payload</th>
+								<th width="10%" ng-click="orderByMe('key1')">Key1</th>
+								<th width="15%">Key4</th>
+								<th width="20%">Error Msg</th>
+								<th width="8%" ng-click="orderByMe('processed_time')">Processed Time</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="cust in mesconList">
-								<td>{{cust.insert_time_stamp}}</td>
-								<td>{{cust.store_Num}}</td>
-								<td>{{cust.country}}</td>
-								<td>{{cust.processing_cd}}</td>
-								<td>{{cust.operation}}</td>
-								<td>{{cust.payload}}</td>
+							<tr ng-repeat="mesCus in mesconList | orderBy:myOrderBy:true" height='20px' >
+								<td>{{mesCus.insert_time_stamp}}</td>
+								<td>{{mesCus.store_Num}}</td>
+								<td >{{mesCus.country}}</td>
+								<td>{{mesCus.processing_cd}}</td>
+								<td>{{mesCus.operation}}</td>
+								<td><textarea rows="3" cols="30" title="{{mesCus.payload}}">{{mesCus.payload}}</textarea></td>
+								<td>{{mesCus.key1}}</td>
+								<td width="150">{{mesCus.key4}}</td>
+								<td><textarea rows="3" cols="20" title="{{mesCus.error_msg}}">{{mesCus.error_msg}}</textarea></td>
+								<td>{{mesCus.processed_time}}</td>
 							</tr>
+							
 						</tbody>
 					</table>
 				</div>
 		</div>
 
-	
+		
 </body>
 <script>
 // Used to toggle the menu on small screens when clicking on the menu button
@@ -121,5 +201,4 @@ function myFunction() {
   }
 }
 </script>
-
 </html>

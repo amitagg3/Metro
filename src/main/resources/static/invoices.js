@@ -5,7 +5,7 @@ var myApp = angular.module('myApp', ['ngSanitize','ngCsv']);
 		$scope.e1Countries = ['ES','RU','FR','HU','RO','DK','GR','RS','MD','US'];
 		$scope.e2Countries = ['IN','PK','JP','VN','CN','KZ'];
 		$scope.e3Countries = ['DE'];
-		$scope.invoiceStatus=['SendingFailed','Submitted','In-Process','Cancelled','Credited','Rejected','Voided','Pending','Closed'];
+		$scope.invoiceStatus=['Invoiced','SendingFailed','Submitted','In-Process','Cancelled','Credited','Rejected','Voided','Pending','Closed'];
 		$scope.childScope={};
 		$scope.enterprise="";
 		$scope.childScope.Country="";
@@ -16,8 +16,10 @@ var myApp = angular.module('myApp', ['ngSanitize','ngCsv']);
 	 	$scope.invoiceList =[];
 	 	$scope.infileList =[];
 	 	$scope.status="";
+	 	$scope.searchFlag=0;
 	 	$scope.resMsg = null;
 	 	$scope.data = {};
+	 	
     	var showInvoiceList =function(){$http({
             method: 'GET',
             url: 'http://localhost:8080/invoices/allInvoices?enterprise='+$scope.enterprise+'&country='
@@ -25,16 +27,17 @@ var myApp = angular.module('myApp', ['ngSanitize','ngCsv']);
             +'&invc_num='+$scope.invc_num+'&order_num='+$scope.order_num+'&status='+$scope.status
          }).then(function (response){
         	 var obj=JSON.parse(JSON.stringify(response));
+     	 	$scope.searchFlag=1;
         	 $scope.invoiceList =obj.data;
         	 $scope.infileList =[];
+        	 if(!$scope.childScope.Country == ""){
         	 for(invoice of $scope.invoiceList){
         		var obj={};
         		obj.name ="run task for component WfProcBatchMgr with SearchSpec = \"([Id] = '"+invoice.row_id  + "' AND [Account Organization Id] = '" +invoice.bu_id+"')\"";
         		obj.processname="ProcessName=\"DC_MG Billing Process - Send Invoice\"";
         		$scope.infileList.push(obj);
      		}
-        	 console.log(obj.name);
-      		console.log($scope.infileList);
+        	 }
       		$scope.count=$scope.invoiceList.length;
         	 $scope.loading = 0;
         	 $scope.showRecords =5;
@@ -44,6 +47,10 @@ var myApp = angular.module('myApp', ['ngSanitize','ngCsv']);
         	 $scope.showRecords =5;
          });
 		}
+    	 $scope.orderByMe = function(x) {
+    	        $scope.myOrderBy = x;
+    	    }
+    	
     	$scope.clear=function(){
     		$scope.enterprise="";
     		$scope.childScope.Country="";
@@ -61,7 +68,32 @@ var myApp = angular.module('myApp', ['ngSanitize','ngCsv']);
         		$scope.loading = 5;
         		showInvoiceList();
         		};
-    	
+        	
+        	$scope.generatecsv=function(){
+        		$http({
+                    method: 'GET',
+                    url: 'http://localhost:8080/invoices/generatecsv'
+                 }).then(function (response){
+                	 alert("CSV generated in T drive");
+                 	},function (error){
+                	 $scope.resMsg = "No Data";
+                	 alert("Some error Occured");
+
+                 });
+        	};
+        	$scope.generateInfile=function(){
+        		$http({
+                    method: 'GET',
+                    url: 'http://localhost:8080/invoices/generateInfile'
+                 }).then(function (response){
+                	 alert("Infile generated in T drive");
+                 	},function (error){
+                	 $scope.resMsg = "No Data";
+                	 alert("Some error Occured");
+
+                 });
+        	};
+        	
     }]);
 		
 		
