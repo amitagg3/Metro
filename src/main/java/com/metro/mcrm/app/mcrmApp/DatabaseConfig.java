@@ -13,21 +13,34 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 public class DatabaseConfig {
+	
 
-    @Bean(name = "pp12")
+    @Bean(name = "E1")
     @Autowired
     @ConfigurationProperties(prefix="spring.datasource")
-    public javax.sql.DataSource dataSourcepp12() {
+    public javax.sql.DataSource dataSourceE1() {
     	
 
         return  DataSourceBuilder.create().build();
     }
 
-    @Bean(name = "pp21")
+    @Bean(name = "E2")
     @Primary
     @Autowired
     @ConfigurationProperties(prefix="spring.seconddatasource")
-    public javax.sql.DataSource dataSourcepp21() {
+    public javax.sql.DataSource dataSourceE2() {
+        return  DataSourceBuilder.create().build();
+    }
+    @Bean(name = "E3")
+    @Autowired
+    @ConfigurationProperties(prefix="spring.thirddatasource")
+    public javax.sql.DataSource dataSourceE3() {
+        return  DataSourceBuilder.create().build();
+    }
+    @Bean(name = "E0")
+    @Autowired
+    @ConfigurationProperties(prefix="spring.fourthdatasource")
+    public javax.sql.DataSource dataSourceE0() {
         return  DataSourceBuilder.create().build();
     }
     
@@ -40,15 +53,26 @@ public class DatabaseConfig {
 
     @Bean(name = "jdbcTemplateOne")
     @Autowired
-    public JdbcTemplate jdbcTemplateOne(@Qualifier("pp12")DataSource pp12) {
-        return new JdbcTemplate((javax.sql.DataSource) pp12);
+    public JdbcTemplate jdbcTemplateOne(@Qualifier("E1")DataSource E1) {
+        return new JdbcTemplate((javax.sql.DataSource) E1);
     }
 
     @Bean(name = "jdbcTemplateTwo")
     @Autowired
-    public JdbcTemplate jdbcTemplateTwo(@Qualifier("pp21") DataSource pp21) {
-        return new JdbcTemplate((javax.sql.DataSource) pp21);
+    public JdbcTemplate jdbcTemplateTwo(@Qualifier("E2") DataSource E2) {
+        return new JdbcTemplate((javax.sql.DataSource) E2);
     }
+    @Bean(name = "jdbcTemplateThree")
+    @Autowired
+    public JdbcTemplate jdbcTemplateThree(@Qualifier("E3") DataSource E3) {
+        return new JdbcTemplate((javax.sql.DataSource) E3);
+    }
+    @Bean(name = "jdbcTemplateFour")
+    @Autowired
+    public JdbcTemplate jdbcTemplateFour(@Qualifier("E0") DataSource E0) {
+        return new JdbcTemplate((javax.sql.DataSource) E0);
+    }
+    
     
     @Bean(name = "jdbcTemplateFifth")
     @Autowired
