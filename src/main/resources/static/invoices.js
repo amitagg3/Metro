@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', ['ngSanitize','ngCsv']);
 		myApp.controller('InvoicesController', ['$scope', '$http', function($scope, $http) {
 		$scope.enterprises = ['E0','E1','E2','E3'];
 		$scope.e0Countries = ['PT','SK','PL','IT','TR','HR','CZ','BG','NL','BE'];	
-		$scope.e1Countries = ['ES','RU','FR','HU','RO','DK','GR','RS','MD','US'];
+		$scope.e1Countries = ['ES','RU','FR','HU','RO','UA','DK','GR','RS','MD'];
 		$scope.e2Countries = ['IN','PK','JP','VN','CN','KZ'];
 		$scope.e3Countries = ['DE'];
 		$scope.invoiceStatus=['Invoiced','SendingFailed','Submitted','In-Process','Cancelled','Credited','Rejected','Voided','Pending','Closed'];

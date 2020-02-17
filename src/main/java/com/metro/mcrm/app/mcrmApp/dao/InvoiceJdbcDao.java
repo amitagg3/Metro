@@ -33,6 +33,13 @@ public class InvoiceJdbcDao {
 	@Qualifier("jdbcTemplateTwo")
 	private JdbcTemplate jdbcTemplateTwo;
 
+	@Autowired
+	@Qualifier("jdbcTemplateThree")
+	private JdbcTemplate jdbcTemplateThree;
+	
+	@Autowired
+	@Qualifier("jdbcTemplateFour")
+	private JdbcTemplate jdbcTemplateFour;
 	class InvoiceRowMapper implements RowMapper<Invoice> {
 
 		public Invoice mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -147,6 +154,10 @@ public class InvoiceJdbcDao {
 
 		if (enterprise.equals("E2"))
 			return jdbcTemplateTwo.query("\n" + sql, new InvoiceRowMapper());
+		if (enterprise.equals("E3"))
+			return jdbcTemplateThree.query("\n" + sql, new InvoiceRowMapper());
+		if (enterprise.equals("E0"))
+			return jdbcTemplateFour.query("\n" + sql, new InvoiceRowMapper());
 
 		return null;
 
